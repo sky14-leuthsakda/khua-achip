@@ -1,0 +1,16 @@
+{
+  "name": "khua-achip",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@khua-achip/api",
+    "dev:web": "npm run dev --workspace=@khua-achip/web",
+    "build:api": "npm run build --workspace=@khua-achip/api",
+    "build:web": "npm run build --workspace=@khua-achip/web",
+    "build": "npm run build:api && npm run build:web",
+    "typecheck": "npm run typecheck --workspace=@khua-achip/api && npm run typecheck --workspace=@khua-achip/web"
+  }
+}

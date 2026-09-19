@@ -1,0 +1,1 @@
+import{c as m,a as n}from"../chunks/CupSigZ2.js";import{s}from"../chunks/BvojrSUi.js";import{l as e}from"../chunks/ucirV5Fr.js";function c(a,t){var o=m(),r=e(o);s(r,t,"default",{}),n(a,o)}export{c as component};

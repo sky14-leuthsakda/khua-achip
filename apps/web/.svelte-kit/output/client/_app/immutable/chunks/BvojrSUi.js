@@ -1,0 +1,1 @@
+import{aL as r,h as d,a as m,aM as _}from"./ucirV5Fr.js";import{a as c}from"./CupSigZ2.js";function y(t,a,i,n,h){var f,l;if(d&&m(),(f=a.$$host)!=null&&f.$$shadowRoot){const o=r("slot");c(t,o);return}var e=(l=a.$$slots)==null?void 0:l[i],s=!1;e===!0&&(e=a.children,s=!0),e===void 0||e(t,s?()=>n:n)}_();export{y as s};

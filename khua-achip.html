@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ຂົວອາຊີບ — Khua Achip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --navy-900:#0F1B3D;
+  --navy-800:#16224A;
+  --navy-700:#22315F;
+  --teal-500:#0FADA6;
+  --teal-600:#0C8F8A;
+  --teal-100:#E3F6F4;
+  --amber-500:#E8A33D;
+  --coral-500:#E8664F;
+  --paper:#FAFAF8;
+  --card:#FFFFFF;
+  --ink-900:#161A2B;
+  --ink-600:#5B6072;
+  --ink-400:#9297A6;
+  --line:#EAEAE4;
+  --radius-lg:22px;
+  --radius-md:16px;
+  --radius-sm:10px;
+  --shadow:0 10px 30px -12px rgba(15,27,61,0.18);
+  --shadow-sm:0 4px 14px -6px rgba(15,27,61,0.14);
+  color-scheme: light;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  background: linear-gradient(180deg,#EEF1F8 0%, #E4E9F4 100%);
+  font-family:"Noto Sans Lao","Plus Jakarta Sans",sans-serif;
+  color:var(--ink-900);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.device{
+  width:100%;
+  max-width:412px;
+  height:860px;
+  max-height:96vh;
+  background:var(--paper);
+  border-radius:44px;
+  box-shadow:0 40px 80px -30px rgba(15,27,61,0.45), 0 0 0 10px #0B0F1F;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+}
+.notch{
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:120px; height:22px; background:#0B0F1F; border-radius:0 0 16px 16px; z-index:50;
+}
+.screens{ flex:1; position:relative; overflow:hidden; }
+.screen{
+  position:absolute; inset:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  opacity:0; visibility:hidden;
+  transform:translateX(16px);
+  transition:opacity .28s ease, transform .28s ease;
+  padding-bottom:100px;
+}
+.screen.active{ opacity:1; visibility:visible; transform:translateX(0); }
+.screen::-webkit-scrollbar{width:0;}
+.status-space{ height:34px; flex-shrink:0; }
+
+/* Top bar */
+.topbar{
+  display:flex; align-items:center; gap:12px;
+  padding:14px 20px 6px 20px;
+}
+.topbar .back{
+  width:36px;height:36px;border-radius:50%;background:var(--card);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-sm); flex-shrink:0; cursor:pointer;
+  border:none;
+}
+.topbar h2{ font-size:17px; font-weight:700; margin:0; letter-spacing:.1px; }
+.topbar-sub{ font-size:12px; color:var(--ink-400); margin-top:1px; }
+
+/* Section paddings */
+.pad{ padding:0 20px; }
+.section-title{
+  display:flex; align-items:center; justify-content:space-between;
+  margin:22px 0 12px 0;
+}
+.section-title h3{ font-size:15.5px; font-weight:700; margin:0; }
+.section-title .see-all{ font-size:12.5px; color:var(--teal-600); font-weight:600; cursor:pointer; }
+
+/* Bottom nav */
+.bottomnav{
+  position:absolute; left:0; right:0; bottom:0;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  display:flex; justify-content:space-around; align-items:center;
+  padding:10px 6px 22px 6px; z-index:40;
+}
+.navitem{
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  color:var(--ink-400); cursor:pointer; width:64px; padding:4px 0; border:none; background:none;
+  font-family:inherit;
+}
+.navitem svg{ width:22px;height:22px; stroke:var(--ink-400); fill:none; stroke-width:1.8; }
+.navitem span{ font-size:10.5px; font-weight:600; }
+.navitem.active{ color:var(--navy-800); }
+.navitem.active svg{ stroke:var(--navy-800); }
+
+/* Cards */
+.card{
+  background:var(--card); border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm); padding:16px;
+}
+.hero-card{
+  background:linear-gradient(135deg,var(--navy-900), var(--navy-700));
+  border-radius:var(--radius-lg); padding:22px; color:#fff; position:relative; overflow:hidden;
+}
+.hero-card::after{
+  content:""; position:absolute; right:-40px; top:-40px; width:160px;height:160px;
+  background:radial-gradient(circle, rgba(15,173,166,0.35), transparent 70%);
+}
+.searchbar{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25);
+  border-radius:14px; padding:12px 14px; margin-top:16px; cursor:pointer;
+}
+.searchbar input{
+  background:none;border:none;outline:none;color:#fff;font-size:13.5px;width:100%;
+  font-family:inherit;
+}
+.searchbar input::placeholder{ color:rgba(255,255,255,0.65); }
+
+.feature-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px; }
+.feature-card{
+  background:var(--card); border-radius:var(--radius-md); padding:16px 14px;
+  box-shadow:var(--shadow-sm); cursor:pointer; transition:transform .15s ease;
+  border:1px solid var(--line);
+}
+.feature-card:active{ transform:scale(0.96); }
+.feature-icon{
+  width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:19px; margin-bottom:10px;
+}
+.feature-card h4{ font-size:13.5px; margin:0 0 3px 0; font-weight:700; }
+.feature-card p{ font-size:11px; color:var(--ink-400); margin:0; }
+
+.hscroll{ display:flex; gap:12px; overflow-x:auto; padding:2px 20px 6px 20px; margin:0 -20px; }
+.hscroll::-webkit-scrollbar{display:none;}
+
+.career-card{
+  min-width:158px; background:var(--card); border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm); padding:14px; cursor:pointer; border:1px solid var(--line);
+}
+.career-card .emoji-badge{
+  width:38px;height:38px;border-radius:10px;background:var(--teal-100);
+  display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px;
+}
+.career-card h4{ font-size:13px; margin:0 0 4px 0; font-weight:700; line-height:1.3; }
+.career-card .tag{ font-size:10.5px; color:var(--ink-400); }
+.match-pill{
+  display:inline-block; margin-top:8px; font-size:10.5px; font-weight:700;
+  color:var(--teal-600); background:var(--teal-100); padding:3px 8px; border-radius:20px;
+}
+
+.tutor-card, .center-card, .schol-card{
+  background:var(--card); border-radius:var(--radius-md); padding:14px;
+  box-shadow:var(--shadow-sm); margin-bottom:12px; cursor:pointer; border:1px solid var(--line);
+}
+.row{ display:flex; gap:12px; align-items:flex-start; }
+.avatar{
+  width:52px;height:52px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;
+  background:linear-gradient(135deg,var(--navy-800),var(--teal-600));
+}
+.name-row{ display:flex; align-items:center; gap:6px; }
+.name-row h4{ font-size:14px; margin:0; font-weight:700; }
+.badge-verified{ color:var(--teal-600); font-size:12px; }
+.meta-line{ font-size:12px; color:var(--ink-600); margin-top:2px; }
+.rating{ display:flex; align-items:center; gap:4px; font-size:12px; font-weight:700; color:var(--ink-900); margin-top:6px; }
+.chip-row{ display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+.chip{
+  font-size:10.5px; font-weight:600; color:var(--navy-800); background:#EEF1FA;
+  padding:4px 9px; border-radius:20px;
+}
+.price-tag{ font-size:12.5px; font-weight:700; color:var(--navy-900); }
+.btn-mini{
+  font-size:11.5px; font-weight:700; color:#fff; background:var(--navy-900);
+  padding:7px 13px; border-radius:20px; border:none; float:right; margin-top:-4px;
+}
+
+.filter-scroll{ display:flex; gap:8px; overflow-x:auto; margin:14px -20px 4px -20px; padding:0 20px; }
+.filter-scroll::-webkit-scrollbar{display:none;}
+.filter-chip{
+  flex-shrink:0; font-size:12px; font-weight:600; padding:8px 14px; border-radius:20px;
+  background:var(--card); border:1px solid var(--line); color:var(--ink-600); cursor:pointer;
+}
+.filter-chip.on{ background:var(--navy-900); color:#fff; border-color:var(--navy-900); }
+
+/* buttons */
+.btn-primary{
+  width:100%; padding:15px; border-radius:16px; border:none; background:var(--navy-900);
+  color:#fff; font-size:14.5px; font-weight:700; font-family:inherit; cursor:pointer;
+  box-shadow:0 10px 22px -10px rgba(15,27,61,0.5);
+}
+.btn-secondary{
+  width:100%; padding:14px; border-radius:16px; border:1.5px solid var(--line); background:var(--card);
+  color:var(--navy-900); font-size:14px; font-weight:700; font-family:inherit; cursor:pointer;
+}
+.btn-teal{ background:var(--teal-600); box-shadow:0 10px 22px -10px rgba(12,143,138,0.5); }
+
+/* detail sections */
+.detail-hero{
+  height:200px; background:linear-gradient(135deg,var(--navy-800),var(--navy-900));
+  display:flex; align-items:flex-end; padding:20px; position:relative;
+}
+.detail-hero .icon-circle{
+  position:absolute; top:20px; right:20px; width:52px;height:52px;border-radius:16px;
+  background:rgba(255,255,255,0.15); display:flex;align-items:center;justify-content:center;font-size:24px;
+}
+.detail-hero h1{ color:#fff; font-size:21px; margin:0 0 4px 0; }
+.detail-hero .tag-light{ color:rgba(255,255,255,0.75); font-size:12.5px; }
+.info-block{ margin:18px 0; }
+.info-block h4{ font-size:13.5px; margin:0 0 8px 0; font-weight:700; color:var(--navy-900); }
+.info-block p{ font-size:13px; line-height:1.65; color:var(--ink-600); margin:0; }
+.stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0; }
+.stat-box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:13px; }
+.stat-box .lbl{ font-size:10.5px; color:var(--ink-400); font-weight:600; }
+.stat-box .val{ font-size:14.5px; font-weight:700; margin-top:3px; }
+.disclaimer{
+  font-size:10.5px; color:var(--ink-400); background:#F3F4F1; border-radius:10px; padding:9px 11px; margin-top:8px;
+  border-left:3px solid var(--amber-500);
+}
+.related-scroll{ margin-top:6px; }
+
+/* RIASEC */
+.progress-track{ height:8px; background:var(--line); border-radius:6px; margin:14px 0 6px 0; overflow:hidden; }
+.progress-fill{ height:100%; background:linear-gradient(90deg,var(--teal-500),var(--teal-600)); border-radius:6px; transition:width .35s ease; }
+.q-card{ background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:26px 20px; margin-top:26px; text-align:center; }
+.q-card .q-num{ font-size:12px; color:var(--teal-600); font-weight:700; margin-bottom:10px; }
+.q-card h3{ font-size:17px; line-height:1.5; margin:0 0 22px 0; }
+.likert{ display:flex; justify-content:space-between; gap:6px; }
+.likert button{
+  flex:1; aspect-ratio:1; border-radius:50%; border:1.5px solid var(--line); background:#fff;
+  font-family:inherit; cursor:pointer; display:flex;align-items:center;justify-content:center;
+}
+.likert button.sel{ background:var(--navy-900); border-color:var(--navy-900); }
+.likert-labels{ display:flex; justify-content:space-between; margin-top:8px; font-size:9.5px; color:var(--ink-400); }
+.qnav{ display:flex; gap:10px; margin-top:26px; }
+
+.riasec-bar-row{ margin-bottom:12px; }
+.riasec-bar-row .lbl-row{ display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:5px; }
+.riasec-bar-row .lbl-row b{ font-weight:700; }
+.riasec-track{ height:10px; background:var(--line); border-radius:6px; overflow:hidden; }
+.riasec-fill{ height:100%; border-radius:6px; }
+
+/* AI mentor chat */
+.chat-scroll{ padding:14px 20px 10px 20px; display:flex; flex-direction:column; gap:12px; }
+.bubble{ max-width:80%; padding:12px 14px; border-radius:16px; font-size:13px; line-height:1.55; }
+.bubble.ai{ background:var(--card); align-self:flex-start; border-bottom-left-radius:4px; box-shadow:var(--shadow-sm); }
+.bubble.user{ background:var(--navy-900); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+.reco-inline{ display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+.reco-chip{ background:var(--teal-100); color:var(--teal-600); font-size:12px; font-weight:700; padding:9px 12px; border-radius:12px; }
+.quick-chip-row{ display:flex; gap:8px; overflow-x:auto; padding:0 20px 12px 20px; }
+.quick-chip{ flex-shrink:0; font-size:12px; font-weight:600; background:#fff; border:1px solid var(--line); padding:9px 13px; border-radius:20px; color:var(--navy-800); }
+.chat-input-bar{
+  position:absolute; left:0; right:0; bottom:0; background:#fff; border-top:1px solid var(--line);
+  padding:10px 16px 26px 16px; display:flex; gap:8px; align-items:center;
+}
+.chat-input-bar input{ flex:1; border:1px solid var(--line); border-radius:20px; padding:11px 15px; font-size:13px; font-family:inherit; outline:none;}
+.chat-send{ width:40px;height:40px;border-radius:50%; background:var(--navy-900); border:none; display:flex;align-items:center;justify-content:center; flex-shrink:0; }
+
+/* roadmap */
+.roadmap-line{ position:relative; padding-left:34px; margin-top:20px; }
+.roadmap-line::before{ content:""; position:absolute; left:11px; top:6px; bottom:6px; width:2px; background:var(--line); }
+.rm-step{ position:relative; margin-bottom:26px; }
+.rm-dot{ position:absolute; left:-34px; top:2px; width:24px;height:24px;border-radius:50%; background:var(--line); display:flex;align-items:center;justify-content:center; font-size:11px; color:#fff; font-weight:700; }
+.rm-dot.done{ background:var(--teal-600); }
+.rm-dot.current{ background:var(--navy-900); box-shadow:0 0 0 5px var(--teal-100); }
+.rm-year{ font-size:11px; color:var(--ink-400); font-weight:700; }
+.rm-title{ font-size:14.5px; font-weight:700; margin:2px 0 4px 0; }
+.rm-desc{ font-size:12px; color:var(--ink-600); }
+.rm-status{ display:inline-block; margin-top:6px; font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; }
+.rm-status.done{ background:var(--teal-100); color:var(--teal-600); }
+.rm-status.current{ background:#EEF1FA; color:var(--navy-800); }
+.rm-status.upcoming{ background:#F3F4F1; color:var(--ink-400); }
+
+/* saved tabs */
+.tab-row{ display:flex; gap:6px; overflow-x:auto; margin:14px -20px 6px -20px; padding:0 20px; }
+.tab-row::-webkit-scrollbar{display:none;}
+.tab-btn{ flex-shrink:0; font-size:12.5px; font-weight:700; padding:9px 15px; border-radius:20px; background:#F0F1EC; color:var(--ink-600); border:none; font-family:inherit; }
+.tab-btn.on{ background:var(--navy-900); color:#fff; }
+
+/* profile */
+.profile-head{ display:flex; flex-direction:column; align-items:center; padding-top:10px; }
+.profile-avatar{ width:84px;height:84px;border-radius:26px; background:linear-gradient(135deg,var(--navy-800),var(--teal-600)); display:flex;align-items:center;justify-content:center; color:#fff; font-size:30px; font-weight:700; box-shadow:var(--shadow);}
+.profile-head h2{ font-size:18px; margin:12px 0 2px 0; }
+.profile-head p{ font-size:12.5px; color:var(--ink-400); margin:0; }
+.menu-row{ display:flex; align-items:center; justify-content:space-between; padding:15px 4px; border-bottom:1px solid var(--line); cursor:pointer; }
+.menu-row .left{ display:flex; align-items:center; gap:12px; font-size:13.5px; font-weight:600; }
+.menu-row .icn{ width:34px;height:34px;border-radius:10px; background:var(--teal-100); display:flex;align-items:center;justify-content:center; font-size:15px; }
+
+/* demo mode */
+.demo-fab{
+  position:absolute; right:16px; bottom:104px; z-index:60;
+  background:var(--coral-500); color:#fff; font-size:12px; font-weight:700;
+  padding:11px 16px; border-radius:20px; box-shadow:0 12px 26px -10px rgba(232,102,79,0.6);
+  border:none; display:flex; align-items:center; gap:6px; cursor:pointer;
+}
+.demo-bar{
+  position:absolute; left:12px; right:12px; bottom:14px; z-index:70;
+  background:var(--navy-900); border-radius:18px; padding:12px 14px;
+  display:flex; align-items:center; justify-content:space-between; box-shadow:var(--shadow);
+  display:none;
+}
+.demo-bar.show{ display:flex; }
+.demo-bar .step-lbl{ color:#fff; font-size:11.5px; font-weight:700; }
+.demo-bar .step-name{ color:rgba(255,255,255,0.65); font-size:10px; }
+.demo-controls{ display:flex; gap:8px; }
+.demo-controls button{
+  width:36px;height:36px;border-radius:50%;border:none; background:rgba(255,255,255,0.14);
+  color:#fff; font-size:14px; cursor:pointer;
+}
+.demo-controls button.exit{ background:var(--coral-500); font-size:11px; width:auto; padding:0 12px; border-radius:18px; }
+
+.saved-toggle{ position:absolute; top:14px; right:14px; width:34px;height:34px; border-radius:50%; background:rgba(255,255,255,0.9); display:flex;align-items:center;justify-content:center; font-size:15px; cursor:pointer; border:none; }
+.pill-source{ display:inline-flex; align-items:center; gap:5px; font-size:10.5px; color:var(--ink-400); background:#F3F4F1; padding:4px 9px; border-radius:20px; margin-top:6px; }
+.divider{ height:1px; background:var(--line); margin:20px 0; }
+.empty-illustration{ text-align:center; padding:50px 30px; color:var(--ink-400); }
+.empty-illustration .em{ font-size:40px; margin-bottom:10px; }
+.review-row{ padding:12px 0; border-bottom:1px solid var(--line); }
+.review-row .top{ display:flex; justify-content:space-between; align-items:center; }
+.review-row .top b{ font-size:12.5px; }
+.review-row .stars{ font-size:11px; color:var(--amber-500); }
+.review-row p{ font-size:12px; color:var(--ink-600); margin:5px 0 0 0; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<div class="device" id="device">
+  <div class="notch"></div>
+
+  <div class="screens" id="screens">
+
+    <!-- ============ HOME ============ -->
+    <div class="screen active" data-screen="home">
+      <div class="status-space"></div>
+      <div class="pad">
+        <div class="hero-card">
+          <div style="font-size:20px;">ສະບາຍດີ, ອາລິສາ 👋</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:4px;">ມື້ນີ້ຢາກຄົ້ນຫາຫຍັງ?</div>
+          <div class="searchbar" onclick="go('explore')">
+            <span>🔍</span>
+            <input readonly placeholder="ຄົ້ນຫາອາຊີບ, ວິຊາ, ອາຈານ, ສູນຮຽນ…">
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card" onclick="go('careerList')">
+            <div class="feature-icon" style="background:var(--teal-100);">🎯</div>
+            <h4>ຄົ້ນຫາອາຊີບ</h4><p>ອາຊີບ 120+ ລາຍການ</p>
+          </div>
+          <div class="feature-card" onclick="go('tutorList')">
+            <div class="feature-icon" style="background:#FDECE6;">👨‍🏫</div>
+            <h4>ຊອກຫາອາຈານ</h4><p>ອາຈານ 340+ ຄົນ</p>
+          </div>
+          <div class="feature-card" onclick="go('centerList')">
+            <div class="feature-icon" style="background:#EFF1FA;">🏫</div>
+            <h4>ຊອກຫາສູນຮຽນ</h4><p>ສູນຮຽນ 85+ ແຫ່ງ</p>
+          </div>
+          <div class="feature-card" onclick="go('scholList')">
+            <div class="feature-icon" style="background:#FBF0DD;">🎓</div>
+            <h4>ຊອກຫາທຶນການສຶກສາ</h4><p>ທຶນ 60+ ລາຍການ</p>
+          </div>
+        </div>
+
+        <div class="section-title"><h3>ອາຊີບແນະນຳສຳລັບເຈົ້າ</h3><span class="see-all" onclick="go('careerList')">ເບິ່ງທັງໝົດ</span></div>
+      </div>
+      <div class="hscroll" id="homeCareerScroll"></div>
+
+      <div class="pad">
+        <div class="section-title"><h3>ອາຈານແນະນຳ</h3><span class="see-all" onclick="go('tutorList')">ເບິ່ງທັງໝົດ</span></div>
+      </div>
+      <div class="hscroll" id="homeTutorScroll"></div>
+
+      <div class="pad">
+        <div class="section-title"><h3>ສູນຮຽນໃກ້ເຈົ້າ</h3><span class="see-all" onclick="go('centerList')">ເບິ່ງທັງໝົດ</span></div>
+      </div>
+      <div class="hscroll" id="homeCenterScroll"></div>
+
+      <div class="pad">
+        <div class="section-title"><h3>ທຶນການສຶກສາແນະນຳ</h3><span class="see-all" onclick="go('scholList')">ເບິ່ງທັງໝົດ</span></div>
+      </div>
+      <div class="hscroll" id="homeScholScroll"></div>
+
+      <div class="pad" style="margin-top:6px;">
+        <div class="card" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="go('riasecWelcome')">
+          <div style="font-size:26px;">🧭</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:13.5px;">ຍັງບໍ່ໄດ້ເຮັດແບບປະເມີນ?</div>
+            <div style="font-size:11.5px;color:var(--ink-400);margin-top:2px;">ຮູ້ຈັກຕົວເອງ ແລະ ຄົ້ນຫາອາຊີບທີ່ໃຊ່ພາຍໃນ 5 ນາທີ</div>
+          </div>
+          <div style="color:var(--teal-600);font-size:18px;">›</div>
+        </div>
+      </div>
+      <div style="height:20px;"></div>
+      <button class="demo-fab" onclick="startDemo()">▶ ໂໝດສາທິດ</button>
+    </div>
+
+    <!-- ============ EXPLORE HUB ============ -->
+    <div class="screen" data-screen="explore">
+      <div class="status-space"></div>
+      <div class="pad">
+        <div class="topbar" style="padding:0 0 4px 0;"><h2>ຄົ້ນຫາ</h2></div>
+        <div class="searchbar" style="background:#EFF1EC;border-color:var(--line);margin-top:6px;" onclick="">
+          <span>🔍</span>
+          <input style="color:var(--ink-900);" placeholder="ຄົ້ນຫາອາຊີບ, ວິຊາ, ອາຈານ, ສູນຮຽນ…">
+        </div>
+        <div class="section-title" style="margin-top:20px;"><h3>ໝວດໝູ່</h3></div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="go('careerList')">
+            <div class="feature-icon" style="background:var(--teal-100);margin:0;">🎯</div>
+            <div style="flex:1;"><b style="font-size:13.5px;">ຄົ້ນຫາອາຊີບ</b><div style="font-size:11.5px;color:var(--ink-400);">ຄົ້ນພົບອາຊີບທີ່ເໝາະກັບເຈົ້າ</div></div>
+            <span style="color:var(--ink-400);">›</span>
+          </div>
+          <div class="card" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="go('uniDetail')">
+            <div class="feature-icon" style="background:#EFF1FA;margin:0;">🎓</div>
+            <div style="flex:1;"><b style="font-size:13.5px;">ມະຫາວິທະຍາໄລ ແລະ ວິຊາຮຽນ</b><div style="font-size:11.5px;color:var(--ink-400);">ຂໍ້ມູນມະຫາວິທະຍາໄລໃນ ສປປ ລາວ</div></div>
+            <span style="color:var(--ink-400);">›</span>
+          </div>
+          <div class="card" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="go('tutorList')">
+            <div class="feature-icon" style="background:#FDECE6;margin:0;">👨‍🏫</div>
+            <div style="flex:1;"><b style="font-size:13.5px;">ຊອກຫາອາຈານສອນເພີ່ມ</b><div style="font-size:11.5px;color:var(--ink-400);">ຈອງອາຈານສ່ວນຕົວ ອອນລາຍ ຫຼື ອອຟລາຍ</div></div>
+            <span style="color:var(--ink-400);">›</span>
+          </div>
+          <div class="card" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="go('centerList')">
+            <div class="feature-icon" style="background:#EFF1FA;margin:0;">🏫</div>
+            <div style="flex:1;"><b style="font-size:13.5px;">ຊອກຫາສູນຮຽນເພີ່ມ</b><div style="font-size:11.5px;color:var(--ink-400);">ພາສາ, ໂປຣແກຣມ, ຄະນິດສາດ ແລະ ອື່ນໆ</div></div>
+            <span style="color:var(--ink-400);">›</span>
+          </div>
+          <div class="card" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="go('scholList')">
+            <div class="feature-icon" style="background:#FBF0DD;margin:0;">🎓</div>
+            <div style="flex:1;"><b style="font-size:13.5px;">ຊອກຫາທຶນການສຶກສາ</b><div style="font-size:11.5px;color:var(--ink-400);">ທຶນພາຍໃນ ແລະ ຕ່າງປະເທດ</div></div>
+            <span style="color:var(--ink-400);">›</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ RIASEC WELCOME ============ -->
+    <div class="screen" data-screen="riasecWelcome">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button></div>
+      <div class="pad" style="text-align:center;padding-top:10px;">
+        <div style="font-size:64px;margin:20px 0 10px 0;">🧭</div>
+        <h1 style="font-size:22px;margin:0 0 10px 0;">ມາຮູ້ຈັກຕົວເອງ</h1>
+        <p style="font-size:13.5px;color:var(--ink-600);line-height:1.7;">ແບບປະເມີນນີ້ອີງໃສ່ຫຼັກ RIASEC ເພື່ອຄົ້ນຫາຄວາມສົນໃຈ ແລະ ຈຸດແຂງຂອງເຈົ້າ ແລ້ວແນະນຳອາຊີບທີ່ອາດເໝາະສົມ</p>
+        <div class="card" style="margin-top:24px;text-align:left;">
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;"><span style="font-size:18px;">⏱</span><span style="font-size:12.5px;color:var(--ink-600);">ໃຊ້ເວລາປະມານ 5-7 ນາທີ</span></div>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;"><span style="font-size:18px;">📝</span><span style="font-size:12.5px;color:var(--ink-600);">20 ຄຳຖາມ ແບບເລືອກລະດັບຄວາມເຫັນດີ</span></div>
+          <div style="display:flex;gap:10px;align-items:center;"><span style="font-size:18px;">🔒</span><span style="font-size:12.5px;color:var(--ink-600);">ຄຳຕອບຂອງເຈົ້າຈະຖືກເກັບໄວ້ເປັນສ່ວນຕົວ</span></div>
+        </div>
+      </div>
+      <div class="pad" style="position:absolute;bottom:26px;left:0;right:0;">
+        <button class="btn-primary" onclick="startAssessment()">ເລີ່ມການປະເມີນ</button>
+      </div>
+    </div>
+
+    <!-- ============ RIASEC QUESTIONS ============ -->
+    <div class="screen" data-screen="riasecQ">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button><h2>ແບບປະເມີນຕົນເອງ</h2></div>
+      <div class="pad">
+        <div class="progress-track"><div class="progress-fill" id="qProgressFill" style="width:5%;"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-400);"><span id="qCounter">ຄຳຖາມ 1 / 20</span><span id="qPercent">5%</span></div>
+        <div class="q-card">
+          <div class="q-num" id="qDimLabel">ດ້ານ: Investigative</div>
+          <h3 id="qText">ຂ້ອຍມັກແກ້ໄຂບັນຫາທີ່ສັບສົນ ແລະ ທ້າທາຍ</h3>
+          <div class="likert" id="likertRow"></div>
+          <div class="likert-labels"><span>ບໍ່ເຫັນດີ</span><span>ເຫັນດີຫຼາຍ</span></div>
+        </div>
+        <div class="qnav">
+          <button class="btn-secondary" style="width:auto;flex:1;" onclick="prevQuestion()">ກັບຄືນ</button>
+          <button class="btn-primary" style="width:auto;flex:2;" id="qNextBtn" onclick="nextQuestion()">ຕໍ່ໄປ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ RIASEC RESULT ============ -->
+    <div class="screen" data-screen="riasecResult">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button><h2>ຜົນການປະເມີນ</h2></div>
+      <div class="pad">
+        <div class="card" style="text-align:center;background:linear-gradient(135deg,var(--navy-900),var(--navy-700));color:#fff;">
+          <div style="font-size:12px;color:rgba(255,255,255,0.7);">ບຸກຄະລິກອາຊີບຫຼັກຂອງເຈົ້າ</div>
+          <div style="font-size:26px;font-weight:800;margin:6px 0 2px 0;">Investigative</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.75);">ນັກຄົ້ນຄວ້າ —ມັກວິເຄາະ ແລະ ແກ້ໄຂບັນຫາ</div>
+        </div>
+
+        <div class="section-title"><h3>ຄະແນນແຕ່ລະດ້ານ</h3></div>
+        <div id="riasecBars"></div>
+
+        <div class="section-title"><h3>ອາຊີບທີ່ອາດເໝາະກັບເຈົ້າ</h3></div>
+        <div id="resultCareerList" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+    </div>
+
+    <!-- ============ CAREER LIST ============ -->
+    <div class="screen" data-screen="careerList">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button><h2>ຄົ້ນຫາອາຊີບ</h2></div>
+      <div class="pad">
+        <div class="searchbar" style="background:#EFF1EC;border-color:var(--line);">
+          <span>🔍</span><input style="color:var(--ink-900);" placeholder="ຄົ້ນຫາອາຊີບ...">
+        </div>
+        <div class="filter-scroll" id="careerFilters"></div>
+        <div id="careerListWrap" style="display:flex;flex-direction:column;gap:12px;margin-top:8px;"></div>
+      </div>
+    </div>
+
+    <!-- ============ CAREER DETAIL ============ -->
+    <div class="screen" data-screen="careerDetail">
+      <div class="detail-hero" id="careerHero">
+        <button class="back" style="position:absolute;top:16px;left:16px;" onclick="back()">←</button>
+        <button class="saved-toggle" onclick="toggleSave(this,'career')">🤍</button>
+        <div class="icon-circle" id="careerHeroIcon">💻</div>
+        <div><h1 id="careerHeroTitle">ນັກພັດທະນາຊອບແວ</h1><div class="tag-light" id="careerHeroTag">ດ້ານເທັກໂນໂລຊີ</div></div>
+      </div>
+      <div class="pad">
+        <div class="info-block"><h4>ເຮັດຫຍັງແດ່?</h4><p id="careerWhat"></p></div>
+        <div class="info-block"><h4>ທັກສະທີ່ຕ້ອງການ</h4><div class="chip-row" id="careerSkills"></div></div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="lbl">ເງິນເດືອນ (ໂດຍປະມານ)</div><div class="val" id="careerSalary">4-9 ລ້ານ LAK</div></div>
+          <div class="stat-box"><div class="lbl">ໂອກາດວຽກ</div><div class="val" id="careerDemand">🟢 ສູງ</div></div>
+        </div>
+        <div class="disclaimer">ອ້າງອີງ: ກົມແຮງງານ, 2025 — ລາຍໄດ້ຕົວຈິງອາດແຕກຕ່າງກັນຕາມບໍລິສັດ ແລະ ປະສົບການ</div>
+        <div class="info-block"><h4>ເສັ້ນທາງການສຶກສາ</h4><p id="careerEdu"></p></div>
+        <div class="section-title" style="margin:20px 0 10px 0;"><h3>ມະຫາວິທະຍາໄລທີ່ກ່ຽວຂ້ອງ</h3></div>
+        <div class="card" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="go('uniDetail')">
+          <div class="feature-icon" style="background:#EFF1FA;margin:0;">🎓</div>
+          <div style="flex:1;"><b style="font-size:13px;">ຄະນະວິທະຍາສາດຄອມພິວເຕີ, ມຊ.ລ</b><div style="font-size:11px;color:var(--ink-400);">National University of Laos</div></div>
+          <span style="color:var(--ink-400);">›</span>
+        </div>
+        <div class="section-title"><h3>ອາຈານແນະນຳ</h3></div>
+        <div class="tutor-card" onclick="go('tutorDetail')" style="margin-bottom:0;">
+          <div class="row"><div class="avatar">ວລ</div><div style="flex:1;">
+            <div class="name-row"><h4>ອາຈານ ວັນນະລີ</h4><span class="badge-verified">✅</span></div>
+            <div class="meta-line">ໂປຣແກຣມມິ່ງ · ອອນລາຍ</div>
+            <div class="rating">⭐ 4.8 <span style="color:var(--ink-400);font-weight:400;">· ນັກຮຽນ 62 ຄົນ</span></div>
+          </div></div>
+        </div>
+        <div class="section-title"><h3>ສູນຮຽນແນະນຳ</h3></div>
+        <div class="center-card" style="margin-bottom:0;" onclick="go('centerDetail')">
+          <div class="row"><div class="avatar" style="background:linear-gradient(135deg,#5865C2,#0FADA6);">CS</div><div style="flex:1;">
+            <h4 style="font-size:13.5px;">CodeLab Vientiane</h4>
+            <div class="meta-line">ໂປຣແກຣມມິ່ງ · ວຽງຈັນ</div>
+            <div class="rating">⭐ 4.7 <span style="color:var(--ink-400);font-weight:400;">· ອອນລາຍ+ອອຟລາຍ</span></div>
+          </div></div>
+        </div>
+        <div class="section-title"><h3>ທຶນການສຶກສາທີ່ກ່ຽວຂ້ອງ</h3></div>
+        <div class="schol-card" style="margin-bottom:0;" onclick="go('scholDetail')">
+          <div style="display:flex;justify-content:space-between;"><b style="font-size:13.5px;">ASEAN Digital Scholarship</b><span class="match-pill">ກົງກັນ 88%</span></div>
+          <div class="meta-line">ສິງກະໂປ · ປະລິນຍາຕີ · ທຶນເຕັມ</div>
+        </div>
+        <div style="height:10px;"></div>
+        <button class="btn-primary" onclick="go('roadmap')">ສ້າງເສັ້ນທາງການຮຽນສຳລັບອາຊີບນີ້</button>
+      </div>
+    </div>
+
+    <!-- ============ UNIVERSITY DETAIL ============ -->
+    <div class="screen" data-screen="uniDetail">
+      <div class="detail-hero" style="background:linear-gradient(135deg,#1F2A56,#0F1B3D);">
+        <button class="back" style="position:absolute;top:16px;left:16px;" onclick="back()">←</button>
+        <button class="saved-toggle" onclick="toggleSave(this,'uni')">🤍</button>
+        <div class="icon-circle">🎓</div>
+        <div><h1>ຄະນະວິທະຍາສາດຄອມພິວເຕີ</h1><div class="tag-light">ມະຫາວິທະຍາໄລແຫ່ງຊາດລາວ · ວຽງຈັນ</div></div>
+      </div>
+      <div class="pad">
+        <div class="stat-grid">
+          <div class="stat-box"><div class="lbl">🎓 ໄລຍະເວລາ</div><div class="val">4 ປີ</div></div>
+          <div class="stat-box"><div class="lbl">💰 ຄ່າຮຽນ/ປີ</div><div class="val">6.5 ລ້ານ LAK</div></div>
+          <div class="stat-box"><div class="lbl">📍 ສະຖານທີ່</div><div class="val">ວຽງຈັນ</div></div>
+          <div class="stat-box"><div class="lbl">🗓 ຮັບສະໝັກ</div><div class="val">ພຶດສະພາ-ກໍລະກົດ</div></div>
+        </div>
+        <div class="info-block"><h4>ເງື່ອນໄຂຮັບເຂົ້າ</h4><p>ຈົບມັດທະຍົມປາຍ (ມ.7), ຄະແນນສະເລ່ຍວິຊາຄະນິດສາດ ແລະ ວິທະຍາສາດຜ່ານເກນ, ສອບເສັງເສັງເຂົ້າຫຼັກສູດ</p></div>
+        <div class="info-block"><h4>ອາຊີບທີ່ກ່ຽວຂ້ອງ</h4>
+          <div class="chip-row"><span class="chip">ນັກພັດທະນາຊອບແວ</span><span class="chip">ນັກວິເຄາະຂໍ້ມູນ</span><span class="chip">ຄວາມປອດໄພໄຊເບີ</span><span class="chip">UI/UX Designer</span></div>
+        </div>
+        <button class="btn-secondary" onclick="go('careerDetail')">ເບິ່ງອາຊີບທີ່ກ່ຽວຂ້ອງ</button>
+      </div>
+    </div>
+
+    <!-- ============ TUTOR LIST ============ -->
+    <div class="screen" data-screen="tutorList">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button><h2>ຊອກຫາອາຈານສອນເພີ່ມ</h2></div>
+      <div class="pad">
+        <div class="filter-scroll">
+          <div class="filter-chip on">ທັງໝົດ</div><div class="filter-chip">ພາສາອັງກິດ</div><div class="filter-chip">ໂປຣແກຣມມິ່ງ</div><div class="filter-chip">ຄະນິດສາດ</div><div class="filter-chip">ອອນລາຍ</div><div class="filter-chip">ລາຄາ</div><div class="filter-chip">ຄະແນນ</div>
+        </div>
+        <div id="tutorListWrap" style="display:flex;flex-direction:column;gap:0;margin-top:6px;"></div>
+        <div class="divider"></div>
+        <div class="card" style="display:flex;align-items:center;gap:12px;cursor:pointer;">
+          <span style="font-size:22px;">👋</span>
+          <div style="flex:1;"><b style="font-size:13px;">ຂ້ອຍຢາກສອນ</b><div style="font-size:11px;color:var(--ink-400);">ສະໝັກເປັນອາຈານກັບ Khua Achip</div></div>
+          <span style="color:var(--ink-400);">›</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TUTOR DETAIL ============ -->
+    <div class="screen" data-screen="tutorDetail">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button></div>
+      <div class="pad">
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div class="avatar" style="width:72px;height:72px;font-size:24px;border-radius:20px;">ວລ</div>
+          <div>
+            <div class="name-row"><h2 style="margin:0;">ອາຈານ ວັນນະລີ</h2><span class="badge-verified">✅</span></div>
+            <div class="meta-line">ໂປຣແກຣມມິ່ງ · Python, Web Development</div>
+            <div class="rating">⭐ 4.8 · ນັກຮຽນ 62 ຄົນ</div>
+          </div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="lbl">ປະສົບການ</div><div class="val">6 ປີ</div></div>
+          <div class="stat-box"><div class="lbl">ລາຄາ</div><div class="val">80,000 LAK/ຊົ່ວໂມງ</div></div>
+          <div class="stat-box"><div class="lbl">ຮູບແບບ</div><div class="val">ອອນລາຍ + ອອຟລາຍ</div></div>
+          <div class="stat-box"><div class="lbl">ຕາຕະລາງ</div><div class="val">ຈ-ສ, 18:00-20:00</div></div>
+        </div>
+        <div class="info-block"><h4>ແນວທາງການສອນ</h4><p>ເນັ້ນການລົງມືປະຕິບັດຕົວຈິງ, ໃຫ້ນັກຮຽນສ້າງໂປຣເຈັກຂອງຕົນເອງໄປພ້ອມກັບການຮຽນທິດສະດີ ເໝາະສຳລັບຜູ້ເລີ່ມຕົ້ນ</p></div>
+        <div class="info-block"><h4>ວິຊາທີ່ສອນ</h4><div class="chip-row"><span class="chip">Python</span><span class="chip">Web Development</span><span class="chip">Database ພື້ນຖານ</span></div></div>
+        <div class="section-title"><h3>ຣີວິວ (48)</h3></div>
+        <div class="review-row"><div class="top"><b>ນັກຮຽນ ອ.</b><span class="stars">★★★★★</span></div><p>ອະທິບາຍເຂົ້າໃຈງ່າຍ, ໃຈເຢັນຫຼາຍ ແນະນຳໃຫ້ຄົນທີ່ຢາກເລີ່ມຮຽນເຂດນີ້.</p></div>
+        <div class="review-row"><div class="top"><b>ນັກຮຽນ ບ.</b><span class="stars">★★★★★</span></div><p>ໄດ້ຄວາມຮູ້ຫຼາຍກວ່າໃນຫ້ອງຮຽນ, ມີໂປຣເຈັກຕົວຈິງໃຫ້ລອງເຮັດ.</p></div>
+      </div>
+      <div class="pad" style="position:absolute;bottom:26px;left:0;right:0;display:flex;gap:10px;">
+        <button class="btn-secondary" style="flex:1;">ຕິດຕໍ່</button>
+        <button class="btn-primary btn-teal" style="flex:2;">ຈອງຮຽນ</button>
+      </div>
+    </div>
+
+    <!-- ============ CENTER LIST ============ -->
+    <div class="screen" data-screen="centerList">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button><h2>ຊອກຫາສູນຮຽນເພີ່ມ</h2></div>
+      <div class="pad">
+        <div class="filter-scroll">
+          <div class="filter-chip on">ທັງໝົດ</div><div class="filter-chip">🗣 ພາສາອັງກິດ</div><div class="filter-chip">🗣 ພາສາຈີນ</div><div class="filter-chip">💻 ໂປຣແກຣມມິ່ງ</div><div class="filter-chip">📐 ຄະນິດສາດ</div><div class="filter-chip">🧪 ວິທະຍາສາດ</div><div class="filter-chip">🎨 ອອກແບບ</div>
+        </div>
+        <div id="centerListWrap" style="display:flex;flex-direction:column;gap:0;margin-top:6px;"></div>
+      </div>
+    </div>
+
+    <!-- ============ CENTER DETAIL ============ -->
+    <div class="screen" data-screen="centerDetail">
+      <div class="detail-hero" style="background:linear-gradient(135deg,#5865C2,#0FADA6);">
+        <button class="back" style="position:absolute;top:16px;left:16px;" onclick="back()">←</button>
+        <button class="saved-toggle" onclick="toggleSave(this,'center')">🤍</button>
+        <div class="icon-circle">💻</div>
+        <div><h1>CodeLab Vientiane</h1><div class="tag-light">ໂປຣແກຣມມິ່ງ · ວຽງຈັນ</div></div>
+      </div>
+      <div class="pad">
+        <div class="rating" style="margin-top:14px;">⭐ 4.7 <span style="color:var(--ink-400);font-weight:400;">· ຣີວິວ 96 ຄັ້ງ</span></div>
+        <div class="info-block"><h4>ກ່ຽວກັບ</h4><p>ສູນຮຽນສະເພາະດ້ານໂປຣແກຣມມິ່ງ ສອນຕັ້ງແຕ່ພື້ນຖານຈົນເຖິງລະດັບສ້າງແອັບຕົວຈິງ ມີຫ້ອງ Lab ພ້ອມຄອມພິວເຕີໃນທຸກຫ້ອງຮຽນ</p></div>
+        <div class="info-block"><h4>ຫຼັກສູດ</h4>
+          <div class="chip-row"><span class="chip">Python ພື້ນຖານ</span><span class="chip">Web Development</span><span class="chip">Mobile App</span><span class="chip">Data Science</span></div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="lbl">ລາຄາ</div><div class="val">ເລີ່ມ 350,000 LAK/ເດືອນ</div></div>
+          <div class="stat-box"><div class="lbl">ຮູບແບບ</div><div class="val">ອອນລາຍ + ອອຟລາຍ</div></div>
+        </div>
+        <div class="info-block"><h4>ຕາຕະລາງ</h4><p>ຈັນ-ສຸກ 17:00-20:00 · ເສົາ-ອາທິດ 09:00-16:00</p></div>
+        <div class="info-block"><h4>ສະຖານທີ່ ແລະ ຕິດຕໍ່</h4><p>ບ້ານໂພນສະຫວ່າງ, ນະຄອນຫຼວງວຽງຈັນ · ໂທ 020 5555 1234</p></div>
+      </div>
+      <div class="pad" style="position:absolute;bottom:26px;left:0;right:0;">
+        <button class="btn-primary">ຕິດຕໍ່ສູນຮຽນ</button>
+      </div>
+    </div>
+
+    <!-- ============ SCHOLARSHIP LIST ============ -->
+    <div class="screen" data-screen="scholList">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button><h2>ຊອກຫາທຶນການສຶກສາ</h2></div>
+      <div class="pad">
+        <div class="filter-scroll">
+          <div class="filter-chip on">ທັງໝົດ</div><div class="filter-chip">ທຶນເຕັມ</div><div class="filter-chip">ປະລິນຍາຕີ</div><div class="filter-chip">ປະລິນຍາໂທ</div><div class="filter-chip">ອາຊຽນ</div><div class="filter-chip">ໃກ້ໝົດເຂດ</div>
+        </div>
+        <div id="scholListWrap" style="display:flex;flex-direction:column;gap:0;margin-top:6px;"></div>
+      </div>
+    </div>
+
+    <!-- ============ SCHOLARSHIP DETAIL ============ -->
+    <div class="screen" data-screen="scholDetail">
+      <div class="detail-hero" style="background:linear-gradient(135deg,#B9822F,#7A5417);">
+        <button class="back" style="position:absolute;top:16px;left:16px;" onclick="back()">←</button>
+        <button class="saved-toggle" onclick="toggleSave(this,'schol')">🤍</button>
+        <div class="icon-circle">🎓</div>
+        <div><h1>ASEAN Digital Scholarship</h1><div class="tag-light">ສິງກະໂປ · ປະລິນຍາຕີ</div></div>
+      </div>
+      <div class="pad">
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+          <span class="chip" style="background:var(--teal-100);color:var(--teal-600);">ທຶນເຕັມ 100%</span>
+          <span class="match-pill" style="margin-top:0;">ເໝາະກັບ Profile ຂອງເຈົ້າ 88%</span>
+        </div>
+        <div class="info-block"><h4>ລາຍລະອຽດທຶນ</h4><p>ທຶນສະໜັບສະໜູນຄ່າຮຽນ ແລະ ຄ່າຄອງຊີບເຕັມຈຳນວນ ສຳລັບນັກສຶກສາອາຊຽນທີ່ຮຽນສາຍວິທະຍາສາດຄອມພິວເຕີ ຫຼື ດ້ານດິຈິຕອນ</p></div>
+        <div class="info-block"><h4>ຄຸນສົມບັດຜູ້ສະໝັກ</h4><p>ອາຍຸບໍ່ເກີນ 22 ປີ, ຈົບ ມ.7 ດ້ວຍຄະແນນສະເລ່ຍ 3.2 ຂຶ້ນໄປ, ມີໃບຮັບຮອງພາສາອັງກິດ IELTS 6.0+</p></div>
+        <div class="info-block"><h4>ເອກະສານທີ່ຕ້ອງການ</h4><p>ໃບຄະແນນ, ໃບຢັ້ງຢືນພາສາອັງກິດ, ຈົດໝາຍແນະນຳຕົນເອງ, ຈົດໝາຍຮັບຮອງ 2 ສະບັບ</p></div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="lbl">📅 ໝົດເຂດສະໝັກ</div><div class="val">31 ທັນວາ 2026</div></div>
+          <div class="stat-box"><div class="lbl">🎓 ລະດັບ</div><div class="val">ປະລິນຍາຕີ</div></div>
+        </div>
+        <div class="disclaimer">ຂໍ້ມູນອ້າງອີງຈາກແຫຼ່ງທາງການ · ອັບເດດລ່າສຸດ ກັນຍາ 2026 — ວັນທີ ແລະ ເງື່ອນໄຂອາດມີການປ່ຽນແປງ ກະລຸນາກວດສອບກັບແຫຼ່ງທາງການອີກຄັ້ງ</div>
+      </div>
+      <div class="pad" style="position:absolute;bottom:26px;left:0;right:0;">
+        <button class="btn-primary">ໄປຍັງເວັບໄຊທາງການ ↗</button>
+      </div>
+    </div>
+
+    <!-- ============ AI MENTOR ============ -->
+    <div class="screen" data-screen="mentor">
+      <div class="status-space"></div>
+      <div class="topbar" style="padding-bottom:10px;border-bottom:1px solid var(--line);">
+        <div class="avatar" style="width:34px;height:34px;border-radius:10px;font-size:15px;">AI</div>
+        <div><h2 style="font-size:15px;">AI Mentor</h2><div class="topbar-sub">ຮູ້ຈັກເຈົ້າຈາກຜົນປະເມີນ ແລະ ຄວາມສົນໃຈ</div></div>
+      </div>
+      <div class="quick-chip-row">
+        <div class="quick-chip">ຄວນຮຽນຫຍັງ?</div><div class="quick-chip">ແນະນຳອາຈານ</div><div class="quick-chip">ແນະນຳສູນຮຽນ</div><div class="quick-chip">ທຶນທີ່ເໝາະກັບຂ້ອຍ</div>
+      </div>
+      <div class="chat-scroll">
+        <div class="bubble user">ຂ້ອຍຢາກເປັນ Software Developer ຄວນຮຽນຫຍັງ?</div>
+        <div class="bubble ai">ຈາກຄວາມສົນໃຈ ແລະ ຜົນປະເມີນຂອງເຈົ້າ (Investigative ສູງ) ນີ້ແມ່ນຄວາມຮູ້ພື້ນຖານທີ່ຄວນເລີ່ມຮຽນ:</div>
+        <div class="bubble ai" style="width:80%;">
+          <div class="reco-inline">
+            <div class="reco-chip">1. ຄະນິດສາດ</div>
+            <div class="reco-chip">2. ພື້ນຖານໂປຣແກຣມມິ່ງ</div>
+            <div class="reco-chip">3. ພາສາອັງກິດ</div>
+            <div class="reco-chip">4. Database</div>
+            <div class="reco-chip">5. Web Development</div>
+          </div>
+        </div>
+        <div class="bubble ai">ສາມາດເລືອກອາຈານ ຫຼື ຄອສທີ່ເໝາະກັບເຈົ້າໄດ້ ຢາກໃຫ້ຂ້ອຍແນະນຳອາຈານໂປຣແກຣມມິ່ງໃຫ້ບໍ?</div>
+        <div class="card" style="cursor:pointer;" onclick="go('tutorDetail')">
+          <div class="row"><div class="avatar">ວລ</div><div style="flex:1;">
+            <div class="name-row"><h4>ອາຈານ ວັນນະລີ</h4><span class="badge-verified">✅</span></div>
+            <div class="meta-line">ໂປຣແກຣມມິ່ງ · ⭐ 4.8</div>
+          </div><span style="color:var(--ink-400);align-self:center;">›</span></div>
+        </div>
+        <div class="bubble user">ຂອບໃຈ! ຢາກເຫັນເສັ້ນທາງການຮຽນທັງໝົດ</div>
+        <div class="bubble ai">ນີ້ແມ່ນແຜນທີ່ຂ້ອຍສ້າງໃຫ້ ອີງໃສ່ເປົ້າໝາຍ Software Developer ຂອງເຈົ້າ 👇</div>
+        <button class="btn-secondary" style="margin-top:2px;" onclick="go('roadmap')">ເບິ່ງເສັ້ນທາງການຮຽນ</button>
+      </div>
+      <div class="chat-input-bar">
+        <input placeholder="ພິມຄຳຖາມ..."><button class="chat-send">➤</button>
+      </div>
+    </div>
+
+    <!-- ============ ROADMAP ============ -->
+    <div class="screen" data-screen="roadmap">
+      <div class="status-space"></div>
+      <div class="topbar"><button class="back" onclick="back()">←</button><h2>ເສັ້ນທາງການຮຽນຂອງຂ້ອຍ</h2></div>
+      <div class="pad">
+        <div class="card" style="display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,var(--navy-900),var(--navy-700));color:#fff;">
+          <div style="font-size:26px;">💻</div>
+          <div><div style="font-size:11px;color:rgba(255,255,255,0.7);">ເປົ້າໝາຍຂອງຂ້ອຍ</div><div style="font-weight:700;font-size:15px;">ນັກພັດທະນາຊອບແວ</div></div>
+        </div>
+        <div class="roadmap-line" id="roadmapSteps"></div>
+      </div>
+    </div>
+
+    <!-- ============ SAVED ============ -->
+    <div class="screen" data-screen="saved">
+      <div class="status-space"></div>
+      <div class="pad">
+        <div class="topbar" style="padding:0 0 4px 0;"><h2>ບັນທຶກໄວ້</h2></div>
+        <div class="tab-row" id="savedTabs">
+          <button class="tab-btn on" onclick="setSavedTab('career',this)">ອາຊີບ</button>
+          <button class="tab-btn" onclick="setSavedTab('uni',this)">ມະຫາວິທະຍາໄລ</button>
+          <button class="tab-btn" onclick="setSavedTab('tutor',this)">ອາຈານ</button>
+          <button class="tab-btn" onclick="setSavedTab('center',this)">ສູນຮຽນ</button>
+          <button class="tab-btn" onclick="setSavedTab('schol',this)">ທຶນການສຶກສາ</button>
+        </div>
+        <div id="savedContent"></div>
+      </div>
+    </div>
+
+    <!-- ============ PROFILE ============ -->
+    <div class="screen" data-screen="profile">
+      <div class="status-space"></div>
+      <div class="pad">
+        <div class="profile-head">
+          <div class="profile-avatar">ອລ</div>
+          <h2>ອາລິສາ ດວງຈັນ</h2>
+          <p>ມ.5 · ໂຮງຮຽນ ມ.ສົມສະໜຸກ, ວຽງຈັນ</p>
+        </div>
+        <div class="chip-row" style="justify-content:center;display:flex;">
+          <span class="chip">Investigative</span><span class="chip">ຮັກໂປຣແກຣມມິ່ງ</span><span class="chip">ຮັກອອກແບບ</span>
+        </div>
+        <div class="divider"></div>
+        <div class="menu-row" onclick="go('riasecResult')"><div class="left"><span class="icn">🧭</span>ຜົນການປະເມີນຕົນເອງ</div><span style="color:var(--ink-400);">›</span></div>
+        <div class="menu-row" onclick="go('roadmap')"><div class="left"><span class="icn">🗺️</span>ເສັ້ນທາງການຮຽນ</div><span style="color:var(--ink-400);">›</span></div>
+        <div class="menu-row" onclick="go('saved')"><div class="left"><span class="icn">❤️</span>ລາຍການບັນທຶກໄວ້</div><span style="color:var(--ink-400);">›</span></div>
+        <div class="menu-row"><div class="left"><span class="icn">✏️</span>ແກ້ໄຂໂປຣໄຟລ໌</div><span style="color:var(--ink-400);">›</span></div>
+        <div class="menu-row"><div class="left"><span class="icn">🔔</span>ການແຈ້ງເຕືອນ</div><span style="color:var(--ink-400);">›</span></div>
+        <div class="menu-row"><div class="left"><span class="icn">⚙️</span>ຕັ້ງຄ່າ</div><span style="color:var(--ink-400);">›</span></div>
+        <div class="menu-row" style="border-bottom:none;"><div class="left" style="color:var(--coral-500);"><span class="icn" style="background:#FDECE6;">🚪</span>ອອກຈາກລະບົບ</div></div>
+      </div>
+    </div>
+
+  </div> <!-- /screens -->
+
+  <div class="bottomnav" id="bottomnav">
+    <button class="navitem active" data-tab="home" onclick="go('home')">
+      <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+      <span>ໜ້າຫຼັກ</span>
+    </button>
+    <button class="navitem" data-tab="explore" onclick="go('explore')">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <span>ຄົ້ນຫາ</span>
+    </button>
+    <button class="navitem" data-tab="mentor" onclick="go('mentor')">
+      <svg viewBox="0 0 24 24"><path d="M12 3a5 5 0 0 0-5 5c0 2 1 3 1 5v1h8v-1c0-2 1-3 1-5a5 5 0 0 0-5-5Z"/><path d="M9 18h6M10 21h4"/></svg>
+      <span>AI Mentor</span>
+    </button>
+    <button class="navitem" data-tab="saved" onclick="go('saved')">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 2.8 5 6.3 5c2 0 3.3 1 5.7 3.5C14.4 6 15.7 5 17.7 5 21.2 5 23.5 8.5 21.5 12.5 19 16.65 12 21 12 21Z"/></svg>
+      <span>ບັນທຶກ</span>
+    </button>
+    <button class="navitem" data-tab="profile" onclick="go('profile')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+      <span>ໂປຣໄຟລ໌</span>
+    </button>
+  </div>
+
+  <div class="demo-bar" id="demoBar">
+    <div><div class="step-lbl" id="demoStepLbl">1/9</div><div class="step-name" id="demoStepName">ໜ້າຫຼັກ</div></div>
+    <div class="demo-controls">
+      <button onclick="demoStep(-1)">‹</button>
+      <button onclick="demoStep(1)">›</button>
+      <button class="exit" onclick="exitDemo()">ອອກ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const careers = [
+  {id:'sw', icon:'💻', title:'ນັກພັດທະນາຊອບແວ', tag:'ດ້ານເທັກໂນໂລຊີ', match:92,
+    what:'ອອກແບບ, ຂຽນ ແລະ ພັດທະນາໂປຣແກຣມ ຫຼື ແອັບພລິເຄຊັນ ເພື່ອແກ້ໄຂບັນຫາ ຫຼື ຕອບໂຈດຂອງທຸລະກິດ ແລະ ຜູ້ໃຊ້ງານ',
+    edu:'ຈົບ ມ.7 → ປະລິນຍາຕີວິທະຍາສາດຄອມພິວເຕີ ຫຼື ວິສະວະກຳຊອບແວ (4 ປີ) ຫຼືຮຽນຫຼັກສູດອອນລາຍ+ໂປຣເຈັກຕົວຈິງ',
+    salary:'4-9 ລ້ານ LAK', demand:'🟢 ສູງ', skills:['ຄິດເປັນເຫດເປັນຜົນ','Programming','ພາສາອັງກິດ','ຄະນິດສາດ','ເຮັດວຽກເປັນທີມ']},
+  {id:'da', icon:'📊', title:'ນັກວິເຄາະຂໍ້ມູນ', tag:'ດ້ານເທັກໂນໂລຊີ', match:85,
+    what:'ເກັບ, ວິເຄາະ ແລະ ຕີຄວາມໝາຍຂໍ້ມູນ ເພື່ອຊ່ວຍອົງກອນຕັດສິນໃຈ ດ້ວຍພື້ນຖານສະຖິຕິ ແລະ ເຄື່ອງມືວິເຄາະ',
+    edu:'ປະລິນຍາຕີ ຄະນິດສາດ, ສະຖິຕິ ຫຼື ວິທະຍາສາດຄອມພິວເຕີ', salary:'4-8 ລ້ານ LAK', demand:'🟢 ສູງ',
+    skills:['ສະຖິຕິ','Excel/SQL','ການຄິດວິເຄາະ','ການນຳສະເໜີຂໍ້ມູນ']},
+  {id:'cy', icon:'🔐', title:'ຄວາມປອດໄພໄຊເບີ', tag:'ດ້ານເທັກໂນໂລຊີ', match:79,
+    what:'ປົກປ້ອງລະບົບ, ເຄືອຂ່າຍ ແລະ ຂໍ້ມູນຈາກການໂຈມຕີທາງໄຊເບີ ພ້ອມວາງແຜນຮັບມືກັບຄວາມສ່ຽງ',
+    edu:'ປະລິນຍາຕີວິທະຍາສາດຄອມພິວເຕີ + ໃບຢັ້ງຢືນສະເພາະທາງ (ເຊັ່ນ CompTIA Security+)', salary:'5-10 ລ້ານ LAK', demand:'🟡 ປານກາງ',
+    skills:['ເຄືອຂ່າຍຄອມພິວເຕີ','ການແກ້ໄຂບັນຫາ','ຄວາມລະອຽດຮອບຄອບ']},
+  {id:'ux', icon:'🎨', title:'UI/UX Designer', tag:'ດ້ານອອກແບບ', match:74,
+    what:'ອອກແບບປະສົບການ ແລະ ໜ້າຕາຂອງແອັບ/ເວັບໄຊ ໃຫ້ໃຊ້ງານງ່າຍ ແລະ ສວຍງາມ ໂດຍອີງໃສ່ຄວາມຕ້ອງການຜູ້ໃຊ້',
+    edu:'ປະລິນຍາຕີອອກແບບ, ວິທະຍາສາດຄອມພິວເຕີ ຫຼືຮຽນຫຼັກສູດອອກແບບສະເພາະທາງ', salary:'3.5-7 ລ້ານ LAK', demand:'🟡 ປານກາງ',
+    skills:['Figma','ຄວາມຄິດສ້າງສັນ','ຄວາມເຫັນອົກເຫັນໃຈຜູ້ໃຊ້']},
+];
+
+const tutors = [
+  {id:'t1', init:'ວລ', name:'ອາຈານ ວັນນະລີ', subj:'ໂປຣແກຣມມິ່ງ', years:6, rating:4.8, students:62, price:'80,000 LAK/ຊົ່ວໂມງ', mode:'ອອນລາຍ'},
+  {id:'t2', init:'ສພ', name:'ອາຈານ ສົມພອນ', subj:'ພາສາອັງກິດ', years:5, rating:4.9, students:88, price:'50,000 LAK/ຊົ່ວໂມງ', mode:'ອອນລາຍ'},
+  {id:'t3', init:'ບມ', name:'ອາຈານ ບຸນມີ', subj:'ຄະນິດສາດ', years:8, rating:4.7, students:120, price:'60,000 LAK/ຊົ່ວໂມງ', mode:'ອອຟລາຍ'},
+];
+
+const centers = [
+  {id:'c1', init:'CS', name:'CodeLab Vientiane', subj:'ໂປຣແກຣມມິ່ງ', rating:4.7, loc:'ວຽງຈັນ', mode:'ອອນລາຍ+ອອຟລາຍ', price:'350,000 LAK/ເດືອນ', grad:'linear-gradient(135deg,#5865C2,#0FADA6)'},
+  {id:'c2', init:'EN', name:'Bright English Center', subj:'ພາສາອັງກິດ', rating:4.8, loc:'ວຽງຈັນ', mode:'ອອນລາຍ', price:'300,000 LAK/ເດືອນ', grad:'linear-gradient(135deg,#E8664F,#E8A33D)'},
+  {id:'c3', init:'MA', name:'ສູນຄະນິດສາດ ອານຸໄກ', subj:'ຄະນິດສາດ', rating:4.6, loc:'ວຽງຈັນ', mode:'ອອຟລາຍ', price:'250,000 LAK/ເດືອນ', grad:'linear-gradient(135deg,#16224A,#0FADA6)'},
+];
+
+const scholarships = [
+  {id:'s1', name:'ASEAN Digital Scholarship', country:'ສິງກະໂປ', level:'ປະລິນຍາຕີ', funded:'ທຶນເຕັມ', match:88, deadline:'31 ທັນວາ 2026'},
+  {id:'s2', name:'ທຶນລັດຖະບານເກົາຫຼີ (KGSP)', country:'ເກົາຫຼີໃຕ້', level:'ປະລິນຍາຕີ', funded:'ທຶນເຕັມ', match:76, deadline:'15 ພະຈິກ 2026'},
+  {id:'s3', name:'Japan MEXT Scholarship', country:'ຍີ່ປຸ່ນ', level:'ປະລິນຍາໂທ', funded:'ທຶນເຕັມ', match:65, deadline:'20 ມັງກອນ 2027'},
+];
+
+const riasecDims = [
+  {key:'I', name:'Investigative', score:82, color:'#0FADA6'},
+  {key:'R', name:'Realistic', score:74, color:'#5B7BD8'},
+  {key:'A', name:'Artistic', score:61, color:'#E8664F'},
+  {key:'C', name:'Conventional', score:55, color:'#E8A33D'},
+  {key:'S', name:'Social', score:45, color:'#8B6DD8'},
+  {key:'E', name:'Enterprising', score:38, color:'#9297A6'},
+];
+
+const questions = [
+  'ຂ້ອຍມັກແກ້ໄຂບັນຫາທີ່ສັບສົນ ແລະ ທ້າທາຍ',
+  'ຂ້ອຍມັກເຮັດວຽກກັບເຄື່ອງມື ຫຼື ອຸປະກອນຕ່າງໆ',
+  'ຂ້ອຍມັກຄົ້ນຄວ້າ ແລະ ວິເຄາະຂໍ້ມູນ',
+  'ຂ້ອຍມັກສ້າງສັນສິ່ງໃໝ່ ຫຼື ອອກແບບ',
+  'ຂ້ອຍມັກຊ່ວຍເຫຼືອ ແລະ ໃຫ້ຄຳແນະນຳຄົນອື່ນ',
+  'ຂ້ອຍມັກເປັນຜູ້ນຳ ແລະ ຈັດການໂຄງການ',
+  'ຂ້ອຍມັກລະບຽບ ແລະ ຈັດຂໍ້ມູນໃຫ້ເປັນໝວດໝູ່',
+  'ຂ້ອຍມັກທົດລອງ ແລະ ຫາຄຳຕອບດ້ວຍວິທະຍາສາດ',
+  'ຂ້ອຍມັກເຮັດວຽກກາງແຈ້ງ ຫຼືວຽກທີ່ໃຊ້ຮ່າງກາຍ',
+  'ຂ້ອຍມັກຂຽນ ຫຼື ນຳສະເໜີແນວຄວາມຄິດ',
+  'ຂ້ອຍມັກເວົ້າຕໍ່ໜ້າຄົນຫຼາຍໆ',
+  'ຂ້ອຍມັກຄິດໄລ່ ແລະ ວິເຄາະຕົວເລກ',
+  'ຂ້ອຍມັກເຮັດວຽກທີ່ມີຂັ້ນຕອນຊັດເຈນ',
+  'ຂ້ອຍມັກຄົ້ນຫາຄຳຕອບຂອງຄຳຖາມທີ່ຍາກ',
+  'ຂ້ອຍມັກສ້າງດົນຕີ, ສິນລະປະ ຫຼືວັນນະຄະດີ',
+  'ຂ້ອຍມັກສອນ ຫຼືຝຶກອົບຮົມຄົນອື່ນ',
+  'ຂ້ອຍມັກເຈລະຈາ ແລະ ຊັກຊວນຄົນອື່ນ',
+  'ຂ້ອຍມັກເຮັດວຽກທີ່ໃຊ້ຄອມພິວເຕີ',
+  'ຂ້ອຍມັກວາງແຜນ ແລະ ຈັດຕາຕະລາງວຽກ',
+  'ຂ້ອຍມັກລົງມືເຮັດຫຼາຍກວ່ານັ່ງອ່ານທິດສະດີ',
+];
+
+const roadmapSteps = [
+  {year:'2026', title:'ພື້ນຖານໂປຣແກຣມມິ່ງ', desc:'ຮຽນ Python ພື້ນຖານ ແລະ ຕັກກະການຄິດແບບໂປຣແກຣມເມີ', status:'done'},
+  {year:'2027', title:'ການພັດທະນາເວັບໄຊ (Web Development)', desc:'HTML, CSS, JavaScript ແລະ ສ້າງເວັບໄຊທຳອິດຂອງຕົນເອງ', status:'current'},
+  {year:'2028', title:'Backend + Database', desc:'ຮຽນການສ້າງລະບົບຫຼັງບ້ານ ແລະ ຈັດການຖານຂໍ້ມູນ', status:'upcoming'},
+  {year:'2029', title:'ຝຶກງານ (Internship)', desc:'ຝຶກງານກັບບໍລິສັດເທັກໂນໂລຊີ ເພື່ອສະສົມປະສົບການຕົວຈິງ', status:'upcoming'},
+  {year:'2030', title:'ນັກພັດທະນາຊອບແວ', desc:'ເລີ່ມຕົ້ນອາຊີບເປັນນັກພັດທະນາຊອບແວເຕັມຕົວ', status:'upcoming'},
+];
+
+const savedItems = {
+  career:[careers[0]], uni:[{name:'ຄະນະວິທະຍາສາດຄອມພິວເຕີ, ມຊ.ລ', sub:'National University of Laos'}],
+  tutor:[tutors[0]], center:[centers[0]], schol:[scholarships[0]]
+};
+
+/* ---------------- RENDER HELPERS ---------------- */
+function careerCardHtml(c){
+  return `<div class="career-card" onclick="openCareer('${c.id}')">
+    <div class="emoji-badge">${c.icon}</div>
+    <h4>${c.title}</h4>
+    <div class="tag">${c.tag}</div>
+    <div class="match-pill">ກົງກັນ ${c.match}%</div>
+  </div>`;
+}
+function tutorRowHtml(t){
+  return `<div class="tutor-card" onclick="go('tutorDetail')">
+    <div class="row"><div class="avatar">${t.init}</div><div style="flex:1;">
+      <div class="name-row"><h4>${t.name}</h4><span class="badge-verified">✅</span></div>
+      <div class="meta-line">${t.subj} · ${t.years} ປີປະສົບການ</div>
+      <div class="rating">⭐ ${t.rating} <span style="color:var(--ink-400);font-weight:400;">· ນັກຮຽນ ${t.students} ຄົນ</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <span class="price-tag">${t.price}</span><span class="chip">${t.mode}</span>
+      </div>
+    </div></div>
+  </div>`;
+}
+function tutorCardHtml(t){
+  return `<div class="tutor-card" style="min-width:190px;" onclick="go('tutorDetail')">
+    <div class="avatar" style="margin-bottom:8px;">${t.init}</div>
+    <div class="name-row"><h4>${t.name}</h4></div>
+    <div class="meta-line">${t.subj}</div>
+    <div class="rating">⭐ ${t.rating} <span style="color:var(--ink-400);font-weight:400;">· ${t.students} ນັກຮຽນ</span></div>
+    <div class="price-tag" style="display:block;margin-top:6px;">${t.price}</div>
+  </div>`;
+}
+function centerRowHtml(c){
+  return `<div class="center-card" onclick="go('centerDetail')">
+    <div class="row"><div class="avatar" style="background:${c.grad};">${c.init}</div><div style="flex:1;">
+      <h4 style="font-size:13.5px;margin:0;">${c.name}</h4>
+      <div class="meta-line">${c.subj} · ${c.loc}</div>
+      <div class="rating">⭐ ${c.rating} <span style="color:var(--ink-400);font-weight:400;">· ${c.mode}</span></div>
+      <div class="price-tag" style="display:block;margin-top:6px;">${c.price}</div>
+    </div></div>
+  </div>`;
+}
+function centerCardHtml(c){
+  return `<div class="center-card" style="min-width:190px;" onclick="go('centerDetail')">
+    <div class="avatar" style="background:${c.grad};margin-bottom:8px;">${c.init}</div>
+    <h4 style="font-size:13px;margin:0;">${c.name}</h4>
+    <div class="meta-line">${c.loc}</div>
+    <div class="rating">⭐ ${c.rating}</div>
+  </div>`;
+}
+function scholRowHtml(s){
+  return `<div class="schol-card" onclick="go('scholDetail')">
+    <div style="display:flex;justify-content:space-between;"><b style="font-size:13.5px;">${s.name}</b><span class="match-pill">ກົງກັນ ${s.match}%</span></div>
+    <div class="meta-line">${s.country} · ${s.level} · ${s.funded}</div>
+    <div class="pill-source">📅 ໝົດເຂດ ${s.deadline}</div>
+  </div>`;
+}
+function scholCardHtml(s){
+  return `<div class="schol-card" style="min-width:210px;" onclick="go('scholDetail')">
+    <b style="font-size:13px;">${s.name}</b>
+    <div class="meta-line">${s.country} · ${s.funded}</div>
+    <div class="match-pill">ກົງກັນ ${s.match}%</div>
+  </div>`;
+}
+
+function renderHome(){
+  document.getElementById('homeCareerScroll').innerHTML = careers.map(careerCardHtml).join('');
+  document.getElementById('homeTutorScroll').innerHTML = tutors.map(tutorCardHtml).join('');
+  document.getElementById('homeCenterScroll').innerHTML = centers.map(centerCardHtml).join('');
+  document.getElementById('homeScholScroll').innerHTML = scholarships.map(scholCardHtml).join('');
+}
+function renderCareerList(){
+  document.getElementById('careerFilters').innerHTML = ['ທັງໝົດ','ເທັກໂນໂລຊີ','ອອກແບບ','ທຸລະກິດ','ວິທະຍາສາດ'].map((f,i)=>`<div class="filter-chip ${i===0?'on':''}">${f}</div>`).join('');
+  document.getElementById('careerListWrap').innerHTML = careers.map(c=>`
+    <div class="career-card" style="min-width:auto;" onclick="openCareer('${c.id}')">
+      <div class="row"><div class="emoji-badge" style="margin:0;">${c.icon}</div>
+        <div style="flex:1;"><h4>${c.title}</h4><div class="tag">${c.tag}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+            <span style="font-size:11.5px;color:var(--ink-600);">${c.salary}</span>
+            <span class="match-pill">ກົງກັນ ${c.match}%</span>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function openCareer(id){
+  const c = careers.find(x=>x.id===id) || careers[0];
+  document.getElementById('careerHeroIcon').textContent = c.icon;
+  document.getElementById('careerHeroTitle').textContent = c.title;
+  document.getElementById('careerHeroTag').textContent = c.tag;
+  document.getElementById('careerWhat').textContent = c.what;
+  document.getElementById('careerSkills').innerHTML = c.skills.map(s=>`<span class="chip">${s}</span>`).join('');
+  document.getElementById('careerSalary').textContent = c.salary;
+  document.getElementById('careerDemand').textContent = c.demand;
+  document.getElementById('careerEdu').textContent = c.edu;
+  go('careerDetail');
+}
+function renderTutorList(){ document.getElementById('tutorListWrap').innerHTML = tutors.map(tutorRowHtml).join(''); }
+function renderCenterList(){ document.getElementById('centerListWrap').innerHTML = centers.map(centerRowHtml).join(''); }
+function renderScholList(){ document.getElementById('scholListWrap').innerHTML = scholarships.map(scholRowHtml).join(''); }
+
+function renderRiasecResult(){
+  document.getElementById('riasecBars').innerHTML = riasecDims.map(d=>`
+    <div class="riasec-bar-row">
+      <div class="lbl-row"><span>${d.name}</span><b>${d.score}%</b></div>
+      <div class="riasec-track"><div class="riasec-fill" style="width:${d.score}%;background:${d.color};"></div></div>
+    </div>`).join('');
+  document.getElementById('resultCareerList').innerHTML = careers.map(c=>`
+    <div class="career-card" style="min-width:auto;" onclick="openCareer('${c.id}')">
+      <div class="row"><div class="emoji-badge" style="margin:0;">${c.icon}</div>
+        <div style="flex:1;"><h4>${c.title}</h4><div class="tag" style="margin-bottom:4px;">${c.tag}</div>
+        <div style="font-size:11px;color:var(--ink-600);">ເໝາະສົມເພາະເຈົ້າມີຄະແນນ Investigative ສູງ ແລະ ມັກແກ້ໄຂບັນຫາທີ່ທ້າທາຍ</div>
+        </div>
+        <span class="match-pill" style="align-self:flex-start;">${c.match}%</span>
+      </div>
+    </div>`).join('');
+}
+function renderRoadmap(){
+  document.getElementById('roadmapSteps').innerHTML = roadmapSteps.map(s=>{
+    const dotChar = s.status==='done' ? '✓' : '';
+    const statusLabel = s.status==='done' ? 'ສຳເລັດແລ້ວ' : s.status==='current' ? 'ກຳລັງຮຽນ' : 'ຍັງບໍ່ເຖິງ';
+    return `<div class="rm-step">
+      <div class="rm-dot ${s.status}">${dotChar}</div>
+      <div class="rm-year">${s.year}</div>
+      <div class="rm-title">${s.title}</div>
+      <div class="rm-desc">${s.desc}</div>
+      <div class="rm-status ${s.status}">${statusLabel}</div>
+    </div>`;
+  }).join('');
+}
+function renderSaved(tab){
+  const map = {
+    career: (savedItems.career||[]).map(c=>`<div class="career-card" style="min-width:auto;margin-bottom:12px;" onclick="openCareer('${c.id}')">
+      <div class="row"><div class="emoji-badge" style="margin:0;">${c.icon}</div><div style="flex:1;"><h4>${c.title}</h4><div class="tag">${c.tag}</div></div><span>❤️</span></div></div>`).join(''),
+    uni: (savedItems.uni||[]).map(u=>`<div class="card" style="margin-bottom:12px;display:flex;gap:12px;align-items:center;" onclick="go('uniDetail')"><div class="feature-icon" style="background:#EFF1FA;margin:0;">🎓</div><div style="flex:1;"><b style="font-size:13px;">${u.name}</b><div style="font-size:11px;color:var(--ink-400);">${u.sub}</div></div><span>❤️</span></div>`).join(''),
+    tutor: (savedItems.tutor||[]).map(tutorRowHtml).join(''),
+    center: (savedItems.center||[]).map(centerRowHtml).join(''),
+    schol: (savedItems.schol||[]).map(scholRowHtml).join(''),
+  };
+  const content = map[tab] || '';
+  document.getElementById('savedContent').innerHTML = content || `<div class="empty-illustration"><div class="em">🗂️</div><div>ຍັງບໍ່ມີລາຍການບັນທຶກໄວ້<br>ໃນໝວດນີ້</div></div>`;
+}
+function setSavedTab(tab, el){
+  document.querySelectorAll('#savedTabs .tab-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  renderSaved(tab);
+}
+function toggleSave(el){
+  el.textContent = el.textContent.trim()==='🤍' ? '❤️' : '🤍';
+}
+
+/* ---------------- NAVIGATION ---------------- */
+let stack = ['home'];
+const tabScreens = ['home','explore','mentor','saved','profile'];
+
+function renderScreenData(name){
+  if(name==='home') renderHome();
+  if(name==='careerList') renderCareerList();
+  if(name==='tutorList') renderTutorList();
+  if(name==='centerList') renderCenterList();
+  if(name==='scholList') renderScholList();
+  if(name==='riasecResult') renderRiasecResult();
+  if(name==='roadmap') renderRoadmap();
+  if(name==='saved') renderSaved('career');
+}
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const target = document.querySelector(`.screen[data-screen="${name}"]`);
+  if(target){ target.classList.add('active'); target.scrollTop = 0; }
+  renderScreenData(name);
+  const bn = document.getElementById('bottomnav');
+  if(tabScreens.includes(name)){
+    bn.style.display='flex';
+    document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active', n.dataset.tab===name));
+  } else {
+    bn.style.display='none';
+  }
+}
+function go(name){
+  if(tabScreens.includes(name)){ stack = [name]; }
+  else { stack.push(name); }
+  showScreen(name);
+}
+function back(){
+  if(stack.length>1){ stack.pop(); showScreen(stack[stack.length-1]); }
+  else { go('home'); }
+}
+showScreen('home');
+
+/* ---------------- RIASEC FLOW ---------------- */
+let qIndex = 0;
+let qAnswers = new Array(questions.length).fill(null);
+function startAssessment(){ qIndex=0; go('riasecQ'); renderQuestion(); }
+function renderQuestion(){
+  document.getElementById('qCounter').textContent = `ຄຳຖາມ ${qIndex+1} / ${questions.length}`;
+  const pct = Math.round(((qIndex+1)/questions.length)*100);
+  document.getElementById('qPercent').textContent = pct+'%';
+  document.getElementById('qProgressFill').style.width = pct+'%';
+  document.getElementById('qText').textContent = questions[qIndex];
+  const dims=['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
+  document.getElementById('qDimLabel').textContent = 'ດ້ານ: '+dims[qIndex%dims.length];
+  const row = document.getElementById('likertRow');
+  row.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const b=document.createElement('button');
+    b.textContent=i;
+    if(qAnswers[qIndex]===i) b.classList.add('sel');
+    b.onclick=()=>{ qAnswers[qIndex]=i; renderQuestion(); };
+    row.appendChild(b);
+  }
+  document.getElementById('qNextBtn').textContent = qIndex===questions.length-1 ? 'ເບິ່ງຜົນ' : 'ຕໍ່ໄປ';
+}
+function nextQuestion(){
+  if(qIndex < questions.length-1){ qIndex++; renderQuestion(); }
+  else { go('riasecResult'); }
+}
+function prevQuestion(){
+  if(qIndex>0){ qIndex--; renderQuestion(); }
+  else { back(); }
+}
+
+/* ---------------- DEMO MODE ---------------- */
+const demoSequence = [
+  {screen:'home', name:'ໜ້າຫຼັກ', action:null},
+  {screen:'riasecResult', name:'ຜົນການປະເມີນ RIASEC', action:null},
+  {screen:'careerDetail', name:'ອາຊີບທີ່ແນະນຳ', action:()=>openCareer('sw')},
+  {screen:'uniDetail', name:'ມະຫາວິທະຍາໄລ', action:null},
+  {screen:'mentor', name:'AI Mentor', action:null},
+  {screen:'tutorDetail', name:'ອາຈານແນະນຳ', action:null},
+  {screen:'centerDetail', name:'ສູນຮຽນແນະນຳ', action:null},
+  {screen:'scholDetail', name:'ທຶນການສຶກສາ', action:null},
+  {screen:'roadmap', name:'ເສັ້ນທາງການຮຽນ', action:null},
+];
+let demoIdx = 0;
+let demoActive = false;
+function startDemo(){
+  demoActive = true; demoIdx = 0;
+  document.getElementById('demoBar').classList.add('show');
+  applyDemoStep();
+}
+function applyDemoStep(){
+  const step = demoSequence[demoIdx];
+  document.getElementById('demoStepLbl').textContent = `${demoIdx+1}/${demoSequence.length}`;
+  document.getElementById('demoStepName').textContent = step.name;
+  if(step.action) step.action();
+  stack = [step.screen];
+  showScreen(step.screen);
+}
+function demoStep(dir){
+  demoIdx = Math.min(demoSequence.length-1, Math.max(0, demoIdx+dir));
+  applyDemoStep();
+}
+function exitDemo(){
+  demoActive=false;
+  document.getElementById('demoBar').classList.remove('show');
+  go('home');
+}
+</script>
+</body>
+</html>
