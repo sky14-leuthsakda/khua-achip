@@ -5,5 +5,8 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "pages_build_output_dir": ".svelte-kit/cloudflare"
+  "pages_build_output_dir": ".svelte-kit/cloudflare",
+  "vars": {
+    "PUBLIC_API_URL": "https://khua-achip-api.sukanya28988lsd.workers.dev"
+  }
 }
