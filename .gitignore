@@ -1,0 +1,27 @@
+# Node Dependencies (ປ້ອງກັນ node_modules ທຸກລະດັບ)
+node_modules/
+**/node_modules/
+
+# SvelteKit & Build Outputs (Frontend)
+.svelte-kit/
+**/.svelte-kit/
+build/
+**/build/
+dist/
+**/dist/
+
+# Cloudflare Wrangler Cache & Builds (Backend + Frontend)
+.wrangler/
+**/.wrangler/
+
+# Environment Variables & Secrets (ປ້ອງກັນ Key/Token ຮົ່ວ)
+.env
+.env.*
+!.env.example
+
+# OS & IDE Junk Files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/*
+!.vscode/settings.json
