@@ -1,12 +1,29 @@
-const DEFAULT_API_URL = 'http://localhost:8787';
+const PROD_API_URL = 'https://khua-achip-api.sukanya28988lsd.workers.dev';
+const DEV_API_URL = 'http://localhost:8787';
 
 export function getApiBaseUrl(): string {
-  if (typeof window !== 'undefined') {
-    // Check vite env var or global window override
-    const envUrl = (import.meta as any).env?.VITE_API_URL || (import.meta as any).env?.PUBLIC_API_URL;
-    if (envUrl) return envUrl;
+  // 1. Check Vite env variables (VITE_API_URL or PUBLIC_API_URL)
+  const envUrl =
+    (import.meta as any).env?.VITE_API_URL ||
+    (import.meta as any).env?.PUBLIC_API_URL;
+
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
+    return envUrl.trim().replace(/\/+$/, '');
   }
-  return DEFAULT_API_URL;
+
+  // 2. Check if running in production mode or deployed domain
+  if (import.meta.env.PROD) {
+    return PROD_API_URL;
+  }
+
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+      return PROD_API_URL;
+    }
+  }
+
+  return DEV_API_URL;
 }
 
 export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
